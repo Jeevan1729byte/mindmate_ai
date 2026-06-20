@@ -98,8 +98,9 @@ export default function Motivation({ goal, setGoal, recentJournalText }: Motivat
 
         <form onSubmit={handleSaveGoal} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
           <div>
-            <label className="block text-xs font-mono text-slate-300 uppercase mb-2">Target Exam</label>
+            <label htmlFor="exam-selector" className="block text-xs font-mono text-slate-300 uppercase mb-2">Target Exam</label>
             <select
+              id="exam-selector"
               value={tempExam}
               onChange={(e) => setTempExam(e.target.value as CareerGoal["targetExam"])}
               className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500 transition-all font-sans"
@@ -114,8 +115,9 @@ export default function Motivation({ goal, setGoal, recentJournalText }: Motivat
           </div>
 
           <div>
-            <label className="block text-xs font-mono text-slate-300 uppercase mb-2">Life Ambition (Future Self Target)</label>
+            <label htmlFor="ambition-input" className="block text-xs font-mono text-slate-300 uppercase mb-2">Life Ambition (Future Self Target)</label>
             <input
+              id="ambition-input"
               type="text"
               value={tempAsper}
               onChange={(e) => setTempAsper(e.target.value)}

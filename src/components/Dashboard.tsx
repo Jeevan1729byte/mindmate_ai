@@ -70,33 +70,34 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
   };
 
   // Run real forecast mapping via server
-  const fetchForecast = async () => {
-    if (journals.length === 0) return;
-    setLoadingForecast(true);
-    try {
-      const res = await fetch("/api/forecast", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          journals: journals,
-          stats: stats,
-          goal: { targetExam }
-        })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setForecast(data);
-      }
-    } catch (err) {
-      console.log("Forecast error:", err);
-    } finally {
-      setLoadingForecast(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchForecast = async () => {
+      if (journals.length === 0) return;
+      setLoadingForecast(true);
+      try {
+        const res = await fetch("/api/forecast", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            journals: journals,
+            stats: stats,
+            goal: { targetExam }
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setForecast(data);
+        }
+      } catch (err) {
+        console.log("Forecast error:", err);
+      } finally {
+        setLoadingForecast(false);
+      }
+    };
+
     fetchForecast();
-  }, [journals, stats, targetExam]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [journals.length, stats.length, targetExam]);
 
   return (
     <div className="space-y-8 px-1">
@@ -343,8 +344,9 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
             <form onSubmit={handleHabitSubmit} className="space-y-3.5">
               <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block text-[10px] font-mono text-slate-400 mb-1">Study Hours</label>
+                  <label htmlFor="habit-study-hours" className="block text-[10px] font-mono text-slate-400 mb-1">Study Hours</label>
                   <input
+                    id="habit-study-hours"
                     type="number"
                     value={newStudy}
                     onChange={(e) => setNewStudy(e.target.value)}
@@ -353,8 +355,9 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-mono text-slate-400 mb-1">Sleep Hours</label>
+                  <label htmlFor="habit-sleep-hours" className="block text-[10px] font-mono text-slate-400 mb-1">Sleep Hours</label>
                   <input
+                    id="habit-sleep-hours"
                     type="number"
                     value={newSleep}
                     onChange={(e) => setNewSleep(e.target.value)}
@@ -366,8 +369,9 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
 
               <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block text-[10px] font-mono text-slate-400 mb-1">Water Glasses</label>
+                  <label htmlFor="habit-water-glasses" className="block text-[10px] font-mono text-slate-400 mb-1">Water Glasses</label>
                   <input
+                    id="habit-water-glasses"
                     type="number"
                     value={newWater}
                     onChange={(e) => setNewWater(e.target.value)}
@@ -376,8 +380,9 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-mono text-slate-400 mb-1">Break Mins</label>
+                  <label htmlFor="habit-break-mins" className="block text-[10px] font-mono text-slate-400 mb-1">Break Mins</label>
                   <input
+                    id="habit-break-mins"
                     type="number"
                     value={newBreak}
                     onChange={(e) => setNewBreak(e.target.value)}
