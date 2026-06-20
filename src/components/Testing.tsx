@@ -43,7 +43,7 @@ export default function Testing() {
           <Terminal className="text-indigo-400 w-5 h-5" />
           <div>
             <h2 className="text-base font-semibold text-white tracking-tight">Code Quality & Test Suites</h2>
-            <p className="text-xs text-slate-350 mt-0.5">Simulate unit tests, coverage analytics, and OWASP validations.</p>
+            <p className="text-xs text-slate-300 mt-0.5">Simulate unit tests, coverage analytics, and OWASP validations.</p>
           </div>
         </div>
         <div className="flex gap-2">

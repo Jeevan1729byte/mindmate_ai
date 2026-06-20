@@ -4,6 +4,7 @@ import {
   Sparkles, ShieldCheck, Zap, Layers, Plus, Droplets, Bed, BookOpen, Coffee, HelpCircle 
 } from "lucide-react";
 import { JournalEntry, MoodLog, StressForecast, RecoveryScore, UserStats } from "../types";
+import { calculateBurnoutScore } from "../utils/helpers";
 
 interface DashboardProps {
   journals: JournalEntry[];
@@ -42,22 +43,7 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
     { date: "Fri", mood: "😊", label: "Confidence", explanation: "Syllabus mapping completed; confidence returned ahead of mock mocks." }
   ];
 
-  // Calculate dynamic Burnout Score using study hours and sleep durations
-  const calculateBurnoutScore = () => {
-    if (stats.length === 0) return 45; // average default
-    // More study hours combined with less sleep hours increases burnout coefficient
-    const latest = stats[stats.length - 1];
-    let score = (latest.studyHours * 8) - (latest.sleepHours * 6) + (latest.breakTime < 30 ? 25 : 0);
-    if (journals.length > 0) {
-      const latestJ = journals[journals.length - 1];
-      if (latestJ.analysis) {
-        score += (latestJ.analysis.anxiety + latestJ.analysis.stress) / 3;
-      }
-    }
-    return Math.min(100, Math.max(12, Math.round(score)));
-  };
-
-  const score = calculateBurnoutScore();
+  const score = calculateBurnoutScore(stats, journals);
   let riskLevel: "Low" | "Moderate" | "High" = "Low";
   let riskColor = "text-emerald-450";
   let progressColor = "bg-emerald-500";
@@ -122,7 +108,7 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
             <BookOpen className="w-3 h-3 text-indigo-400" /> Study Load
           </span>
           <p className="text-2xl font-semibold text-white font-mono mt-2">
-            {stats.length > 0 ? stats[stats.length - 1].studyHours : 8}h <span className="text-xs text-slate-450">/ avg</span>
+            {stats.length > 0 ? stats[stats.length - 1].studyHours : 8}h <span className="text-xs text-slate-400">/ avg</span>
           </p>
         </div>
 
@@ -131,7 +117,7 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
             <Bed className="w-3 h-3 text-emerald-400" /> Optic Sleep
           </span>
           <p className="text-2xl font-semibold text-white font-mono mt-2">
-            {stats.length > 0 ? stats[stats.length - 1].sleepHours : 7}h <span className="text-xs text-slate-450">/ optimal</span>
+            {stats.length > 0 ? stats[stats.length - 1].sleepHours : 7}h <span className="text-xs text-slate-400">/ optimal</span>
           </p>
         </div>
 
@@ -140,7 +126,7 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
             <Droplets className="w-3 h-3 text-teal-400 animate-pulse" /> Hydration
           </span>
           <p className="text-2xl font-semibold text-white font-mono mt-2">
-            {stats.length > 0 ? stats[stats.length - 1].waterIntake : 6}gl <span className="text-xs text-slate-450">/ glasses</span>
+            {stats.length > 0 ? stats[stats.length - 1].waterIntake : 6}gl <span className="text-xs text-slate-400">/ glasses</span>
           </p>
         </div>
 
@@ -149,7 +135,7 @@ export default function Dashboard({ journals, stats, onAddStats, targetExam }: D
             <Coffee className="w-3 h-3 text-purple-400" /> Break Intervals
           </span>
           <p className="text-2xl font-semibold text-white font-mono mt-2">
-            {stats.length > 0 ? stats[stats.length - 1].breakTime : 45}m <span className="text-xs text-slate-450">/ daily</span>
+            {stats.length > 0 ? stats[stats.length - 1].breakTime : 45}m <span className="text-xs text-slate-400">/ daily</span>
           </p>
         </div>
       </div>

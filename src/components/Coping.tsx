@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Play, Pause, RotateCcw, Wind, Heart, Sparkles, BookOpen, Clock, Activity } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { formatTime } from "../utils/helpers";
 
 const BREED_STEPS = [
   { text: "Inhale deeply...", duration: 4, color: "from-emerald-400 to-teal-500", scale: 1.5 },
@@ -104,12 +105,6 @@ export default function Coping() {
     const defaultSecs = timerMode === "focus" ? 25 * 60 : 5 * 60;
     setPomodoroDuration(defaultSecs);
     setInitialDuration(defaultSecs);
-  };
-
-  const formatTime = (secs: number) => {
-    const m = Math.floor(secs / 60);
-    const s = secs % 60;
-    return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   };
 
   return (

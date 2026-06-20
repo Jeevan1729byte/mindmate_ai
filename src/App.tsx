@@ -386,7 +386,7 @@ export default function App() {
 
         {/* INTEGRATED FOOTER SUMMARY */}
         <footer className="shrink-0 bg-white/5 backdrop-blur-md rounded-[32px] border border-white/10 p-5 mt-auto flex flex-col md:flex-row justify-between items-center text-center gap-3">
-          <p className="font-serif italic text-xs text-slate-350 max-w-lg text-center md:text-left">
+          <p className="font-serif italic text-xs text-slate-300 max-w-lg text-center md:text-left">
             "Your value as an aspirant is infinite, independent of the mock sheet. Treat your head with compassionate grace."
           </p>
           <div className="flex flex-wrap justify-center items-center gap-4 text-[9px] font-mono uppercase text-slate-400">

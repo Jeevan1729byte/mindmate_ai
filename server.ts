@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
+import { detectCrisis } from "./src/utils/helpers";
 
 dotenv.config();
 
@@ -30,17 +31,6 @@ if (apiKey && apiKey !== "MY_GEMINI_API_KEY") {
   }
 } else {
   console.warn("MindMate AI: GEMINI_API_KEY is not set. Running in simulation fallback mode.");
-}
-
-// Emergency support trigger detection helper
-function detectCrisis(text: string): boolean {
-  const lowercase = text.toLowerCase();
-  const crisisKeywords = [
-    "quit life", "end my life", "suicide", "want to die", 
-    "kill myself", "no reason to live", "quit this world",
-    "nothing matters anymore", "want to end everything"
-  ];
-  return crisisKeywords.some(keyword => lowercase.includes(keyword));
 }
 
 // 1. Journal Analysis Route
